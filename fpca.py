@@ -134,7 +134,7 @@ class Fpca(object):
             train_x, train_y = list(zip(*train_data))
             test_x, test_y = list(zip(*test_data))
             for i in range(n_h):
-                fit_y = lpr.Lpr(np.vstack(train_x), np.hstack(train_y), np.vstack(test_x), h.take(i, 0),
+                fit_y = lpr.Lpr(np.vstack(train_x), np.hstack(train_y), np.vstack(test_x), candidate_h.take(i, 0),
                                 binning = binning, ker_fun = ker_fun)
                 ssq[i] = ((test_y - fit_y)**2).sum()
         h_opt = candidate_h.take(np.nanargmin(ssq), 0)
