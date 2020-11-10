@@ -93,7 +93,7 @@ class Fpca(object):
                 test_index = np.random.random_integers(0, self.__num_fun, 100)
             else:
                 test_index = range(self.__num_fun)
-            for i in range(n_h):
+            for i in range(candidate_h.shape[0]):
                 h = candidate_h.take(i, 0)
                 for j in test_index:
                     fit_y = lpr.Lpr(np.vstack(x[-j]), np.hstack(y[-j]), x[j], h.take(i, 0),
