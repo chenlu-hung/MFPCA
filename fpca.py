@@ -101,7 +101,7 @@ class Fpca(object):
                     if np.any(np.isnan(fit_y)):
                         sse[i] = np.nan
                         break
-                    ssq[i] += ((y[j] - fit_y)**2).sum()
+                    sse[i] += ((y[j] - fit_y)**2).sum()
         opt_h = candidate_h.take(np.nanargmin(sse), 0)
         return(opt_h)
 
