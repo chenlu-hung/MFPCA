@@ -90,7 +90,7 @@ class Fpca(object):
         else:
             x, y = kwargs['x'], kwargs['y']
             if self.__num_fun > 100:
-                test_index = np.random.random_integers(0, self.__num_fun, 100)
+                test_index = np.random.random_integers(0, self.__num_fun-1, 100)
             else:
                 test_index = range(self.__num_fun)
             for i in range(candidate_h.shape[0]):
