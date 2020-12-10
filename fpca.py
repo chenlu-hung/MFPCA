@@ -90,10 +90,10 @@ class Fpca(object):
         else:
             x, y = kwargs['x'], kwargs['y']
             if self.__num_fun > 100:
-                test_index = np.random.random_integers(0, self.__num_fun, 100)
+                test_index = np.random.random_integers(0, self.__num_fun-1, 100)
             else:
                 test_index = range(self.__num_fun)
-            for i in range(n_h):
+            for i in range(candidate_h.shape[0]):
                 h = candidate_h.take(i, 0)
                 for j in test_index:
                     fit_y = lpr.Lpr(np.vstack(x[-j]), np.hstack(y[-j]), x[j], h.take(i, 0),
@@ -101,7 +101,7 @@ class Fpca(object):
                     if np.any(np.isnan(fit_y)):
                         sse[i] = np.nan
                         break
-                    ssq[i] += ((y[j] - fit_y)**2).sum()
+                    sse[i] += ((y[j] - fit_y)**2).sum()
         opt_h = candidate_h.take(np.nanargmin(sse), 0)
         return(opt_h)
 
@@ -134,7 +134,7 @@ class Fpca(object):
             train_x, train_y = list(zip(*train_data))
             test_x, test_y = list(zip(*test_data))
             for i in range(n_h):
-                fit_y = lpr.Lpr(np.vstack(train_x), np.hstack(train_y), np.vstack(test_x), h.take(i, 0),
+                fit_y = lpr.Lpr(np.vstack(train_x), np.hstack(train_y), np.vstack(test_x), candidate_h.take(i, 0),
                                 binning = binning, ker_fun = ker_fun)
                 ssq[i] = ((test_y - fit_y)**2).sum()
         h_opt = candidate_h.take(np.nanargmin(ssq), 0)
